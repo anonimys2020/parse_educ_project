@@ -10,7 +10,7 @@ import urllib.request
 
 
 
-s = Service("../chromedriver")
+s = Service("./chromedriver")
 chrome_options = Options()
 chrome_options.add_argument("start-maximized")
 

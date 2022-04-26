@@ -54,7 +54,7 @@ class Parse:
             self.i = self.i.split('/')
             self.i = self.i[-1]
             self.links += [f'https://gb.ru/api/v2/lessons/{self.i}/playlist']
-            self.homework_url += [f'https://gb.ru/lessons/{self.i}/homework']
+            self.homework_url += [f'https://gb.ru/lessons/{self.i}/homework'] # получение ссылок дз путем добавки /homework
 
         self.json_str = []
         for link in self.links:
@@ -74,11 +74,12 @@ class Parse:
         for self.i in self.homework_url:
             self.driver.get(self.i)
             self.homework = []
-            self.homework = self.driver.find_element(By.CLASS_NAME, 'task-block-teacher')
-            self.homework = self.homework.get_attribute('innerHTML')
-            for self.j in range(len(self.homework)):
+            self.homework_str = '' # я сейчас добавил обнуление мб из-за него текст не обнулялся
+            self.homework = self.driver.find_element(By.CLASS_NAME, 'task-block-teacher') # поиск div
+            self.homework = self.homework.get_attribute('innerHTML') # получение html в виде текста тут получится массив
+            for self.j in range(len(self.homework)): # соединяем все элементы списка ['<', 'd', 'i', 'v', '>']...
                 self.homework_str += str(self.homework[self.j])
-            self.homeworks += [self.homework_str]
+            self.homeworks += [self.homework_str]  # добавлям html код в массив
         # print(len(self.homeworks), self.homeworks[0], '\n', self.homeworks[1])
 
         try:
